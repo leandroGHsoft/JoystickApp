@@ -31,7 +31,7 @@
         app:progressTextColor="0xffFFBB33"
         app:progressTextSize="35"
         app:showMark="true"
-        app:showProgress="true"
+        app:showProgress="false"
         app:startAngle="0"
         app:startColor="0xFFFFF314"
         app:startValue="0" />
@@ -89,6 +89,7 @@
         android:id="@+id/midle_layout"
         android:layout_width="124dp"
         android:layout_height="200dp"
+        android:layout_marginTop="32dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toStartOf="@+id/jder_layout"
         app:layout_constraintStart_toEndOf="@+id/seek_arc"
@@ -223,5 +224,31 @@
             android:layout_height="wrap_content"
             android:orientation="vertical" />
     </ScrollView>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp"
+        android:text="@string/tv_throttle"
+        android:textColor="@color/colorAccent"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/seek_arc"
+        app:layout_constraintEnd_toEndOf="@+id/seek_arc"
+        app:layout_constraintHorizontal_bias="0.522"
+        app:layout_constraintStart_toStartOf="@+id/seek_arc" />
+
+    <TextView
+        android:id="@+id/throttle_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="110dp"
+        android:text="@string/tv_throttle_value"
+        android:textColor="@color/colorAccent"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/seek_arc"
+        app:layout_constraintStart_toStartOf="@+id/seek_arc"
+        app:layout_constraintTop_toTopOf="@+id/seek_arc" />
 
 </android.support.constraint.ConstraintLayout>

@@ -69,6 +69,8 @@ public class MainActivity extends AppCompatActivity {
     BluetoothAdapter bluetoothAdapter;
     // Declaro el Dialog bluetooth
     Dialog dialogBluetooth;
+    // Throtle textview
+    TextView throttle_value;
     /***********************************************************************************************
      * Declaración de variables
      **********************************************************************************************/
@@ -123,6 +125,8 @@ public class MainActivity extends AppCompatActivity {
         tv_byte2_b0 = (TextView) findViewById(R.id.tv_byte2_b0);
         // Registro los elementos para la conexión bluetooth
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        // Throttle value
+        throttle_value = (TextView) findViewById(R.id.throttle_value);
         /******************************************************************************************/
         js2 = new JoystickClass(getApplicationContext(), jder_layout, R.drawable.joystick_lever);
         js2.setStickSize(200, 200);
@@ -175,7 +179,7 @@ public class MainActivity extends AppCompatActivity {
         ShaderSeekArc seekArc = (ShaderSeekArc) findViewById(R.id.seek_arc);
         int[] colors = new int[]{0xFF2C3EFF, 0xFF53FF65, 0xFF000000};
         seekArc.setColors(colors);
-        float[] positions = new float[]{0, 1f / 2, 2};
+        float[] positions = new float[]{0, 1f / 2, 1};
         seekArc.setPositions(positions);
         seekArc.setStartColor(0xFF1636FF);
         seekArc.setEndColor(0xFFFF2D0C);
@@ -187,7 +191,7 @@ public class MainActivity extends AppCompatActivity {
         seekArc.setOnSeekArcChangeListener(new ShaderSeekArc.OnSeekArcChangeListener() {
             @Override
             public void onProgressChanged(ShaderSeekArc seekArc, float progress) {
-                //Log.d(TAG, "progress " + progress);
+                SetThrottle(progress);
             }
             @Override
             public void onStartTrackingTouch(ShaderSeekArc seekArc) {
@@ -205,8 +209,6 @@ public class MainActivity extends AppCompatActivity {
     /***********************************************************************************************
      * Funciones para los joysticks
      **********************************************************************************************/
-
-
     public void joystick_der_functions(int direction){
         if (direction == JoystickClass.STICK_UP) {
             if (LAST_EVENT_J2 != JoystickClass.STICK_UP) {
@@ -345,6 +347,17 @@ public class MainActivity extends AppCompatActivity {
             LAST_EVENT_J2 = JoystickClass.STICK_NONE;
         }
     } // Fin de función joystick_der_functions
+
+    /***********************************************************************************************
+     * Función para el throttle
+     **********************************************************************************************/
+    public void SetThrottle(float progress){
+        int throttle = (int)Math.round(progress);
+        throttle_value.setText(Integer.toString(throttle));
+        msgBuffer[0] = (byte)throttle;
+        if (flag_conect == 1)
+            sendData(msgBuffer, DeviceAddress);
+    }
 
     /***********************************************************************************************
      * Función para escribir en el Log Textview

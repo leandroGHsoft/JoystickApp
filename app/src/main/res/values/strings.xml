@@ -8,8 +8,11 @@
     <string name="rb_rs232">RS232</string>
 
     // Textviews
+    <string name="tv_throttle">Throttle</string>
+    <string name="tv_throttle_value">0</string>
+
     <string name="tv_byte3">Byte3</string>
-    <string name="tv_byte2">Byte2</string>
+    <string name="tv_byte2">Joystick</string>
     <string name="tv_byte1">Byte1</string>
     <string name="tv_byte0">Byte0</string>
 
