@@ -15,15 +15,15 @@
         android:layout_height="250dp"
         android:layout_gravity="center"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp"
         app:arcWidthRate="1"
         app:endAngle="45"
         app:endColor="0xFFCC151C"
         app:endValue="100"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.002"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radiogroup"
         app:lineColor="0xff33B5E5"
         app:markColor="0xff33B5E5"
         app:markSize="30"
@@ -40,50 +40,12 @@
         android:id="@+id/jder_layout"
         android:layout_width="250dp"
         android:layout_height="250dp"
-        android:layout_marginTop="10dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginBottom="16dp"
         android:background="@drawable/joystick_der"
         android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radiogroup"></LinearLayout>
-
-    <RadioGroup
-        android:id="@+id/radiogroup"
-        android:layout_width="123dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:orientation="vertical"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <RadioButton
-            android:id="@+id/rb_bluetooth"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/rb_bluetooth"
-            android:onClick="onRadioButtonClicked"
-            android:textColor="@color/colorAccent" />
-
-        <RadioButton
-            android:id="@+id/rb_usb"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/rb_usb"
-            android:onClick="onRadioButtonClicked"
-            android:textColor="@color/colorAccent" />
-
-        <RadioButton
-            android:id="@+id/rb_rs232"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/rb_rs232"
-            android:onClick="onRadioButtonClicked"
-            android:textColor="@color/colorAccent" />
-    </RadioGroup>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"></LinearLayout>
 
     <LinearLayout
         android:id="@+id/midle_layout"
@@ -191,10 +153,10 @@
         style="@android:style/Widget.Holo.Button.Small"
         android:layout_width="105dp"
         android:layout_height="32dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="180dp"
+        android:layout_marginTop="32dp"
         android:text="@string/btn_conectar"
-        app:layout_constraintStart_toEndOf="@+id/radiogroup"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -216,7 +178,7 @@
         android:background="@color/colorBlack"
         app:layout_constraintBottom_toTopOf="@+id/jder_layout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/FixLogTitle">
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:id="@+id/scrollView_layout"
@@ -250,5 +212,19 @@
         app:layout_constraintEnd_toEndOf="@+id/seek_arc"
         app:layout_constraintStart_toStartOf="@+id/seek_arc"
         app:layout_constraintTop_toTopOf="@+id/seek_arc" />
+
+    <Switch
+        android:id="@+id/switchBT"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="32dp"
+        android:text="@string/switch_bluetooth"
+        android:textColor="@color/colorAccent"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:checked="false"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

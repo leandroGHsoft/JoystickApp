@@ -17,8 +17,6 @@
     <string name="tv_byte0">Byte0</string>
 
     <string name="tv_dummy">X</string>
-    <string name="tv_byte3_b1">0</string>
-    <string name="tv_byte3_b0">0</string>
 
     <string name="tv_byte2_b7">0</string>
     <string name="tv_byte2_b6">0</string>
@@ -29,23 +27,8 @@
     <string name="tv_byte2_b1">0</string>
     <string name="tv_byte2_b0">0</string>
 
-    <string name="tv_byte1_b7">0</string>
-    <string name="tv_byte1_b6">0</string>
-    <string name="tv_byte1_b5">0</string>
-    <string name="tv_byte1_b4">0</string>
-    <string name="tv_byte1_b3">0</string>
-    <string name="tv_byte1_b2">0</string>
-    <string name="tv_byte1_b1">0</string>
-    <string name="tv_byte1_b0">0</string>
+    <string name="switch_bluetooth">Bluetooth</string>
 
-    <string name="tv_byte0_b7">0</string>
-    <string name="tv_byte0_b6">0</string>
-    <string name="tv_byte0_b5">0</string>
-    <string name="tv_byte0_b4">0</string>
-    <string name="tv_byte0_b3">0</string>
-    <string name="tv_byte0_b2">0</string>
-    <string name="tv_byte0_b1">0</string>
-    <string name="tv_byte0_b0">0</string>
 
     <string name="tv_log_title">Log</string>
 

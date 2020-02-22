@@ -23,6 +23,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -31,6 +32,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.ScrollView;
 import android.widget.SimpleAdapter;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -60,9 +62,6 @@ public class MainActivity extends AppCompatActivity {
     ScrollView scrollview;
     // Declaro el botón
     Button btnConnect;
-    // Declaro los radiobuttons y radiogroup
-    RadioButton rb;
-    RadioGroup rg;
     // Declaro los textview para los bytes
     TextView tv_byte2_b7, tv_byte2_b6, tv_byte2_b5, tv_byte2_b4, tv_byte2_b3, tv_byte2_b2, tv_byte2_b1, tv_byte2_b0;
     // Declaro los objetos para el bluetooth
@@ -71,6 +70,8 @@ public class MainActivity extends AppCompatActivity {
     Dialog dialogBluetooth;
     // Throtle textview
     TextView throttle_value;
+    // Switch bluetooth
+    Switch switch_bluetooth;
     /***********************************************************************************************
      * Declaración de variables
      **********************************************************************************************/
@@ -112,8 +113,6 @@ public class MainActivity extends AppCompatActivity {
         scrollview = (ScrollView) findViewById(R.id.scrollView);
         // Registro el botón para realizar la conexión
         btnConnect = (Button) findViewById(R.id.btn_connect);
-        // Registro el radiogroup
-        rg = (RadioGroup) findViewById(R.id.radiogroup);
         // Registro los textview para mostrar las posiciones de los joysticks
         tv_byte2_b7 = (TextView) findViewById(R.id.tv_byte2_b7);
         tv_byte2_b6 = (TextView) findViewById(R.id.tv_byte2_b6);
@@ -127,6 +126,8 @@ public class MainActivity extends AppCompatActivity {
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         // Throttle value
         throttle_value = (TextView) findViewById(R.id.throttle_value);
+        // Switch bluetooth
+        switch_bluetooth = (Switch) findViewById(R.id.switchBT);
         /******************************************************************************************/
         js2 = new JoystickClass(getApplicationContext(), jder_layout, R.drawable.joystick_lever);
         js2.setStickSize(200, 200);
@@ -162,16 +163,20 @@ public class MainActivity extends AppCompatActivity {
         btnConnect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switch (ConnectionFlag){
-                    case 1:
-                        BluetoothConnection();
-                        break;
-                    case 2:
-                        USBconnection();
-                        break;
-                    case 3:
-                        RS232connection();
-                        break;
+                BluetoothConnection();
+            }
+        });
+
+        switch_bluetooth.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                Boolean btflagswitch = switch_bluetooth.isChecked();
+                if (btflagswitch == true) {
+                    checkOnOffBluetooth();
+                }
+                else {
+                    //btSocket.close();
+                    bluetoothAdapter.disable();
                 }
             }
         });
@@ -393,55 +398,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    /***********************************************************************************************
-     * Función para el Radiogroup y los Radiobuttons
-     **********************************************************************************************/
-    public void onRadioButtonClicked(View view) {
-        int radbtnid = rg.getCheckedRadioButtonId();
-        rb = (RadioButton) findViewById(radbtnid);
-        //Toast.makeText(getApplicationContext(), rb.getText(), Toast.LENGTH_SHORT).show();
-
-        // Is the button now checked?
-        boolean checked = ((RadioButton) view).isChecked();
-        // Hacemos un case con lo que ocurre cada vez que pulsemos un botón
-        switch(view.getId()) {
-            case R.id.rb_bluetooth:
-                if (checked) {
-                    textLog("Comunicación Bluetooth seleccionada", "info");
-                    ConnectionFlag = 1;
-                    checkOnOffBluetooth();
-                }
-                break;
-            case R.id.rb_usb:
-                if (checked) {
-                    textLog("Comunicación USB seleccionada", "info");
-                    ConnectionFlag = 2;
-                }
-                break;
-            case R.id.rb_rs232:
-                if (checked) {
-                    textLog("Comunicación RS232 seleccionada", "info");
-                    ConnectionFlag = 3;
-                }
-                break;
-        }
-    } // Fin de onRadioButtonClicked
-
-
-    /***********************************************************************************************
-     * Funciones para la conexión USB
-     **********************************************************************************************/
-    public void USBconnection(){
-
-    }
-
-
-    /***********************************************************************************************
-     * Funciones para la conexión RS232
-     **********************************************************************************************/
-    public void RS232connection(){
-
-    }
     /***********************************************************************************************
      * Funciones para el bluetooth
      **********************************************************************************************/
