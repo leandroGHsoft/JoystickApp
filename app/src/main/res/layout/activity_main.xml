@@ -9,18 +9,32 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <LinearLayout
-        android:id="@+id/jizq_layout"
+    <me.rorschach.library.ShaderSeekArc
+        android:id="@+id/seek_arc"
         android:layout_width="250dp"
         android:layout_height="250dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/joystick_izq"
-        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        app:arcWidthRate="1"
+        app:endAngle="45"
+        app:endColor="0xFFCC151C"
+        app:endValue="100"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radiogroup">
-
-    </LinearLayout>
+        app:layout_constraintTop_toBottomOf="@+id/radiogroup"
+        app:lineColor="0xff33B5E5"
+        app:markColor="0xff33B5E5"
+        app:markSize="30"
+        app:progress="0"
+        app:progressTextColor="0xffFFBB33"
+        app:progressTextSize="35"
+        app:showMark="true"
+        app:showProgress="true"
+        app:startAngle="0"
+        app:startColor="0xFFFFF314"
+        app:startValue="0" />
 
     <LinearLayout
         android:id="@+id/jder_layout"
@@ -76,99 +90,9 @@
         android:layout_width="124dp"
         android:layout_height="200dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="@+id/jizq_layout"
         app:layout_constraintEnd_toStartOf="@+id/jder_layout"
-        app:layout_constraintStart_toEndOf="@+id/jizq_layout"
+        app:layout_constraintStart_toEndOf="@+id/seek_arc"
         app:layout_constraintTop_toTopOf="@+id/jder_layout">
-
-        <TextView
-            android:id="@+id/tv_byte3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/tv_byte3"
-            android:textColor="@color/colorAccent"
-            android:textStyle="bold" />
-
-        <LinearLayout
-            android:id="@+id/byte3data_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/tv_byte3_b7"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="@string/tv_dummy"
-                android:textColor="@color/colorAccent" />
-
-            <TextView
-                android:id="@+id/tv_byte3_b6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="@string/tv_dummy"
-                android:textColor="@color/colorAccent" />
-
-            <TextView
-                android:id="@+id/tv_byte3_b5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="@string/tv_dummy"
-                android:textColor="@color/colorAccent" />
-
-            <TextView
-                android:id="@+id/tv_byte3_b4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="@string/tv_dummy"
-                android:textColor="@color/colorAccent" />
-
-            <TextView
-                android:id="@+id/tv_byte3_b3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="@string/tv_dummy"
-                android:textColor="@color/colorAccent" />
-
-            <TextView
-                android:id="@+id/tv_byte3_b2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="@string/tv_dummy"
-                android:textColor="@color/colorAccent" />
-
-            <TextView
-                android:id="@+id/tv_byte3_b1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="@string/tv_byte3_b1"
-                android:textColor="@color/colorAccent" />
-
-            <TextView
-                android:id="@+id/tv_byte3_b0"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="@string/tv_byte3_b0"
-                android:textColor="@color/colorAccent" />
-        </LinearLayout>
 
         <TextView
             android:id="@+id/tv_byte2"
@@ -256,184 +180,6 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="@string/tv_byte2_b0"
-                android:textColor="@color/colorAccent" />
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/tv_byte1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/tv_byte1"
-            android:textColor="@color/colorAccent"
-            android:textStyle="bold" />
-
-        <LinearLayout
-            android:id="@+id/byte1data_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/tv_byte1_b7"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="@string/tv_byte1_b7"
-                android:textColor="@color/colorAccent" />
-
-            <TextView
-                android:id="@+id/tv_byte1_b6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="@string/tv_byte1_b6"
-                android:textColor="@color/colorAccent" />
-
-            <TextView
-                android:id="@+id/tv_byte1_b5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="@string/tv_byte1_b5"
-                android:textColor="@color/colorAccent" />
-
-            <TextView
-                android:id="@+id/tv_byte1_b4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="@string/tv_byte1_b4"
-                android:textColor="@color/colorAccent" />
-
-            <TextView
-                android:id="@+id/tv_byte1_b3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="@string/tv_byte1_b3"
-                android:textColor="@color/colorAccent" />
-
-            <TextView
-                android:id="@+id/tv_byte1_b2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="@string/tv_byte1_b2"
-                android:textColor="@color/colorAccent" />
-
-            <TextView
-                android:id="@+id/tv_byte1_b1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="@string/tv_byte1_b1"
-                android:textColor="@color/colorAccent" />
-
-            <TextView
-                android:id="@+id/tv_byte1_b0"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="@string/tv_byte1_b0"
-                android:textColor="@color/colorAccent" />
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/tv_byte0"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/tv_byte0"
-            android:textColor="@color/colorAccent"
-            android:textStyle="bold" />
-
-        <LinearLayout
-            android:id="@+id/byte0data_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/tv_byte0_b7"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="@string/tv_byte0_b7"
-                android:textColor="@color/colorAccent" />
-
-            <TextView
-                android:id="@+id/tv_byte0_b6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="@string/tv_byte0_b6"
-                android:textColor="@color/colorAccent" />
-
-            <TextView
-                android:id="@+id/tv_byte0_b5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="@string/tv_byte0_b5"
-                android:textColor="@color/colorAccent" />
-
-            <TextView
-                android:id="@+id/tv_byte0_b4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="@string/tv_byte0_b4"
-                android:textColor="@color/colorAccent" />
-
-            <TextView
-                android:id="@+id/tv_byte0_b3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="@string/tv_byte0_b3"
-                android:textColor="@color/colorAccent" />
-
-            <TextView
-                android:id="@+id/tv_byte0_b2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="@string/tv_byte0_b2"
-                android:textColor="@color/colorAccent" />
-
-            <TextView
-                android:id="@+id/tv_byte0_b1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="@string/tv_byte0_b1"
-                android:textColor="@color/colorAccent" />
-
-            <TextView
-                android:id="@+id/tv_byte0_b0"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="@string/tv_byte0_b0"
                 android:textColor="@color/colorAccent" />
         </LinearLayout>
 

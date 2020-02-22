@@ -44,15 +44,16 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
-public class MainActivity extends AppCompatActivity {
+import me.rorschach.library.ShaderSeekArc;
 
+public class MainActivity extends AppCompatActivity {
     /***********************************************************************************************
      * Declaración de objetos
      **********************************************************************************************/
     // Declaro los joysticks
-    JoystickClass js1, js2;
+    JoystickClass js2;
     // Declaro los layouts
-    LinearLayout jizq_layout, jder_layout;
+    LinearLayout jder_layout;
     // Declaro el Log multiline
     LinearLayout linearLayout_Log;
     // Declaro el scrollview
@@ -63,7 +64,6 @@ public class MainActivity extends AppCompatActivity {
     RadioButton rb;
     RadioGroup rg;
     // Declaro los textview para los bytes
-    TextView tv_byte3_b1, tv_byte3_b0;
     TextView tv_byte2_b7, tv_byte2_b6, tv_byte2_b5, tv_byte2_b4, tv_byte2_b3, tv_byte2_b2, tv_byte2_b1, tv_byte2_b0;
     // Declaro los objetos para el bluetooth
     BluetoothAdapter bluetoothAdapter;
@@ -103,7 +103,6 @@ public class MainActivity extends AppCompatActivity {
          * Registro de los objetos
          ******************************************************************************************/
         // Registro los joysticks
-        jizq_layout = (LinearLayout) findViewById(R.id.jizq_layout);
         jder_layout = (LinearLayout) findViewById(R.id.jder_layout);
         // Registro el linearLayout del scrollview
         linearLayout_Log = (LinearLayout) findViewById(R.id.scrollView_layout);
@@ -114,8 +113,6 @@ public class MainActivity extends AppCompatActivity {
         // Registro el radiogroup
         rg = (RadioGroup) findViewById(R.id.radiogroup);
         // Registro los textview para mostrar las posiciones de los joysticks
-        tv_byte3_b1 = (TextView) findViewById(R.id.tv_byte3_b1);
-        tv_byte3_b0 = (TextView) findViewById(R.id.tv_byte3_b0);
         tv_byte2_b7 = (TextView) findViewById(R.id.tv_byte2_b7);
         tv_byte2_b6 = (TextView) findViewById(R.id.tv_byte2_b6);
         tv_byte2_b5 = (TextView) findViewById(R.id.tv_byte2_b5);
@@ -127,31 +124,6 @@ public class MainActivity extends AppCompatActivity {
         // Registro los elementos para la conexión bluetooth
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         /******************************************************************************************/
-        js1 = new JoystickClass(getApplicationContext(), jizq_layout, R.drawable.joystick_lever);
-        js1.setStickSize(200, 200);
-        js1.setLayoutAlpha(250);
-        js1.setStickAlpha(250);
-        js1.setOffset(120);
-        js1.setMinimumDistance(20);
-        jizq_layout.setOnTouchListener(new View.OnTouchListener() {
-            public boolean onTouch(View arg0, MotionEvent arg1) {
-                js1.drawStick(arg1);
-                if (arg1.getAction() == MotionEvent.ACTION_DOWN
-                        || arg1.getAction() == MotionEvent.ACTION_MOVE) {
-                    int direction = js1.get2Direction();
-                    joystick_izq_functions(direction);
-                } else if (arg1.getAction() == MotionEvent.ACTION_UP) {
-                    tv_byte3_b0.setText("0");
-                    tv_byte3_b1.setText("0");
-                    LAST_EVENT_J1 = JoystickClass.STICK_NONE;
-                    msgBuffer[0] = -4;
-                    if (flag_conect == 1)
-                        sendData(msgBuffer, DeviceAddress);
-                }
-                return true;
-            }
-        });
-
         js2 = new JoystickClass(getApplicationContext(), jder_layout, R.drawable.joystick_lever);
         js2.setStickSize(200, 200);
         js2.setLayoutAlpha(250);
@@ -199,6 +171,33 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+        /******************************************************************************************/
+        ShaderSeekArc seekArc = (ShaderSeekArc) findViewById(R.id.seek_arc);
+        int[] colors = new int[]{0xFF2C3EFF, 0xFF53FF65, 0xFF000000};
+        seekArc.setColors(colors);
+        float[] positions = new float[]{0, 1f / 2, 2};
+        seekArc.setPositions(positions);
+        seekArc.setStartColor(0xFF1636FF);
+        seekArc.setEndColor(0xFFFF2D0C);
+        seekArc.setStartValue(0);
+        seekArc.setEndValue(100);
+        seekArc.setProgress(0);
+        seekArc.setStartAngle(-225);
+        seekArc.setEndAngle(45);
+        seekArc.setOnSeekArcChangeListener(new ShaderSeekArc.OnSeekArcChangeListener() {
+            @Override
+            public void onProgressChanged(ShaderSeekArc seekArc, float progress) {
+                //Log.d(TAG, "progress " + progress);
+            }
+            @Override
+            public void onStartTrackingTouch(ShaderSeekArc seekArc) {
+                //Log.d(TAG, "onStartTrackingTouch");
+            }
+            @Override
+            public void onStopTrackingTouch(ShaderSeekArc seekArc) {
+                //Log.d(TAG, "onStopTrackingTouch");
+            }
+        });
 
     } // Fin de onCreate()
 
@@ -206,36 +205,7 @@ public class MainActivity extends AppCompatActivity {
     /***********************************************************************************************
      * Funciones para los joysticks
      **********************************************************************************************/
-    public void joystick_izq_functions(int direction){
-        if (direction == JoystickClass.STICK_UP) {
-            if (LAST_EVENT_J1 != JoystickClass.STICK_UP) {
-                msgBuffer[0] = -3;
-                tv_byte3_b0.setText("1");
-                tv_byte3_b1.setText("0");
-                if (flag_conect == 1)
-                    sendData(msgBuffer, DeviceAddress);
-            }
-            LAST_EVENT_J1 = JoystickClass.STICK_UP;
-        } else if (direction == JoystickClass.STICK_DOWN) {
-            if (LAST_EVENT_J1 != JoystickClass.STICK_DOWN) {
-                msgBuffer[0] = -2;
-                tv_byte3_b0.setText("0");
-                tv_byte3_b1.setText("1");
-                if (flag_conect == 1)
-                    sendData(msgBuffer, DeviceAddress);
-            }
-            LAST_EVENT_J1 = JoystickClass.STICK_DOWN;
-        } else if (direction == JoystickClass.STICK_NONE) {
-            if (LAST_EVENT_J1 != JoystickClass.STICK_NONE) {
-                msgBuffer[0] = -4;
-                tv_byte3_b0.setText("0");
-                tv_byte3_b1.setText("0");
-                if (flag_conect == 1)
-                    sendData(msgBuffer, DeviceAddress);
-            }
-            LAST_EVENT_J1 = JoystickClass.STICK_NONE;
-        }
-    } // Fin de función joystick_izq_functions
+
 
     public void joystick_der_functions(int direction){
         if (direction == JoystickClass.STICK_UP) {
