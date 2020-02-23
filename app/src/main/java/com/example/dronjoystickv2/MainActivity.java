@@ -80,9 +80,8 @@ public class MainActivity extends AppCompatActivity {
     // Declaro los bytes que serán enviados
     //public static byte Byte3 = 0, Byte2 = 0, Byte1 = 0, Byte0 = 0;
     // Stream de datos enviados
-    public static byte[] msgBuffer = {0, 0, 0, 0};
-    public static int throttle_msb = 0, throttle_lsb = 0;
-    public static int joystick_msb = 0, joystick_lsb = 0;
+    public static byte[] msgBuffer = {42, 42, 42, 35, 0, 0, 47, 43, 43, 43};
+    public static int throttle = 0, joystick = 0;
     // UUID para el bluetooth
     private static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
     // Socket para el bluetooth
@@ -143,6 +142,7 @@ public class MainActivity extends AppCompatActivity {
                     int direction = js2.get8Direction();
                     joystick_der_functions(direction);
                 } else if (arg1.getAction() == MotionEvent.ACTION_UP) {
+                    msgBuffer[5] = 0;
                     tv_byte2_b0.setText("0");
                     tv_byte2_b1.setText("0");
                     tv_byte2_b2.setText("0");
@@ -152,10 +152,8 @@ public class MainActivity extends AppCompatActivity {
                     tv_byte2_b6.setText("0");
                     tv_byte2_b7.setText("0");
                     LAST_EVENT_J2 = JoystickClass.STICK_NONE;
-                    joystick_msb = 0;
-                    joystick_lsb = 0;
                     if (flag_conect == 1)
-                        DataConstruct();
+                        sendData(msgBuffer, DeviceAddress);
 
                 }
                 return true;
@@ -212,18 +210,6 @@ public class MainActivity extends AppCompatActivity {
 
     } // Fin de onCreate()
 
-    /***********************************************************************************************
-     * Construyo los datos para enviar
-     **********************************************************************************************/
-    public void DataConstruct(){
-        msgBuffer[0] = (byte) (throttle_msb>>4 | 0xA0);
-        msgBuffer[1] = (byte) (throttle_lsb | 0xB0);
-        msgBuffer[2] = (byte) (joystick_msb | 0xC0);
-        msgBuffer[3] = (byte) (joystick_lsb | 0xD0);
-
-        sendData(msgBuffer, DeviceAddress);
-    }
-
 
     /***********************************************************************************************
      * Funciones para los joysticks
@@ -231,8 +217,7 @@ public class MainActivity extends AppCompatActivity {
     public void joystick_der_functions(int direction){
         if (direction == JoystickClass.STICK_UP) {
             if (LAST_EVENT_J2 != JoystickClass.STICK_UP) {
-                joystick_lsb = 1;
-                joystick_msb = 0;
+                msgBuffer[5] = 1;
                 tv_byte2_b0.setText("1");
                 tv_byte2_b1.setText("0");
                 tv_byte2_b2.setText("0");
@@ -242,13 +227,12 @@ public class MainActivity extends AppCompatActivity {
                 tv_byte2_b6.setText("0");
                 tv_byte2_b7.setText("0");
                 if (flag_conect == 1)
-                    DataConstruct();
+                    sendData(msgBuffer, DeviceAddress);
             }
             LAST_EVENT_J2 = JoystickClass.STICK_UP;
         } else if (direction == JoystickClass.STICK_UPRIGHT) {
             if (LAST_EVENT_J2 != JoystickClass.STICK_UPRIGHT) {
-                joystick_lsb = 2;
-                joystick_msb = 0;
+                msgBuffer[5] = 2;
                 tv_byte2_b0.setText("0");
                 tv_byte2_b1.setText("1");
                 tv_byte2_b2.setText("0");
@@ -258,13 +242,12 @@ public class MainActivity extends AppCompatActivity {
                 tv_byte2_b6.setText("0");
                 tv_byte2_b7.setText("0");
                 if (flag_conect == 1)
-                    DataConstruct();
+                    sendData(msgBuffer, DeviceAddress);
             }
             LAST_EVENT_J2 = JoystickClass.STICK_UPRIGHT;
         } else if (direction == JoystickClass.STICK_RIGHT) {
             if (LAST_EVENT_J2 != JoystickClass.STICK_RIGHT) {
-                joystick_lsb = 4;
-                joystick_msb = 0;
+                msgBuffer[5] = 4;
                 tv_byte2_b0.setText("0");
                 tv_byte2_b1.setText("0");
                 tv_byte2_b2.setText("1");
@@ -274,13 +257,12 @@ public class MainActivity extends AppCompatActivity {
                 tv_byte2_b6.setText("0");
                 tv_byte2_b7.setText("0");
                 if (flag_conect == 1)
-                    DataConstruct();
+                    sendData(msgBuffer, DeviceAddress);
             }
             LAST_EVENT_J2 = JoystickClass.STICK_RIGHT;
         } else if (direction == JoystickClass.STICK_DOWNRIGHT){
             if (LAST_EVENT_J2 != JoystickClass.STICK_DOWNRIGHT) {
-                joystick_lsb = 8;
-                joystick_msb = 0;
+                msgBuffer[5] = 8;
                 tv_byte2_b0.setText("0");
                 tv_byte2_b1.setText("0");
                 tv_byte2_b2.setText("0");
@@ -290,13 +272,12 @@ public class MainActivity extends AppCompatActivity {
                 tv_byte2_b6.setText("0");
                 tv_byte2_b7.setText("0");
                 if (flag_conect == 1)
-                    DataConstruct();
+                    sendData(msgBuffer, DeviceAddress);
             }
             LAST_EVENT_J2 = JoystickClass.STICK_DOWNRIGHT;
         } else if (direction == JoystickClass.STICK_DOWN){
             if (LAST_EVENT_J2 != JoystickClass.STICK_DOWN) {
-                joystick_lsb = 0;
-                joystick_msb = 1;
+                msgBuffer[5] = 16;
                 tv_byte2_b0.setText("0");
                 tv_byte2_b1.setText("0");
                 tv_byte2_b2.setText("0");
@@ -306,13 +287,12 @@ public class MainActivity extends AppCompatActivity {
                 tv_byte2_b6.setText("0");
                 tv_byte2_b7.setText("0");
                 if (flag_conect == 1)
-                    DataConstruct();
+                    sendData(msgBuffer, DeviceAddress);
             }
             LAST_EVENT_J2 = JoystickClass.STICK_DOWN;
         } else if (direction == JoystickClass.STICK_DOWNLEFT){
             if (LAST_EVENT_J2 != JoystickClass.STICK_DOWNLEFT) {
-                joystick_lsb = 0;
-                joystick_msb = 2;
+                msgBuffer[5] = 32;
                 tv_byte2_b0.setText("0");
                 tv_byte2_b1.setText("0");
                 tv_byte2_b2.setText("0");
@@ -322,13 +302,12 @@ public class MainActivity extends AppCompatActivity {
                 tv_byte2_b6.setText("0");
                 tv_byte2_b7.setText("0");
                 if (flag_conect == 1)
-                    DataConstruct();
+                    sendData(msgBuffer, DeviceAddress);
             }
             LAST_EVENT_J2 = JoystickClass.STICK_DOWNLEFT;
         } else if (direction == JoystickClass.STICK_LEFT){
             if (LAST_EVENT_J2 != JoystickClass.STICK_LEFT) {
-                joystick_lsb = 0;
-                joystick_msb = 4;
+                msgBuffer[5] = 64;
                 tv_byte2_b0.setText("0");
                 tv_byte2_b1.setText("0");
                 tv_byte2_b2.setText("0");
@@ -338,13 +317,12 @@ public class MainActivity extends AppCompatActivity {
                 tv_byte2_b6.setText("1");
                 tv_byte2_b7.setText("0");
                 if (flag_conect == 1)
-                    DataConstruct();
+                    sendData(msgBuffer, DeviceAddress);
             }
             LAST_EVENT_J2 = JoystickClass.STICK_LEFT;
         } else if (direction == JoystickClass.STICK_UPLEFT){
             if (LAST_EVENT_J2 != JoystickClass.STICK_UPLEFT) {
-                joystick_lsb = 0;
-                joystick_msb = 8;
+                msgBuffer[5] = -128;
                 tv_byte2_b0.setText("0");
                 tv_byte2_b1.setText("0");
                 tv_byte2_b2.setText("0");
@@ -359,8 +337,7 @@ public class MainActivity extends AppCompatActivity {
             LAST_EVENT_J2 = JoystickClass.STICK_UPLEFT;
         } else if (direction == JoystickClass.STICK_NONE){
             if (LAST_EVENT_J2 != JoystickClass.STICK_NONE) {
-                joystick_lsb = 0;
-                joystick_msb = 0;
+                msgBuffer[5] = 0;
                 tv_byte2_b0.setText("0");
                 tv_byte2_b1.setText("0");
                 tv_byte2_b2.setText("0");
@@ -370,7 +347,7 @@ public class MainActivity extends AppCompatActivity {
                 tv_byte2_b6.setText("0");
                 tv_byte2_b7.setText("0");
                 if (flag_conect == 1)
-                    DataConstruct();
+                    sendData(msgBuffer, DeviceAddress);
             }
             LAST_EVENT_J2 = JoystickClass.STICK_NONE;
         }
@@ -382,10 +359,9 @@ public class MainActivity extends AppCompatActivity {
     public void SetThrottle(float progress){
         byte throttle = (byte)Math.round(progress);
         throttle_value.setText(Integer.toString(throttle));
-        throttle_lsb = throttle & 0x0F;
-        throttle_msb = throttle & 0xF0;
+        msgBuffer[4] = throttle;
         if (flag_conect == 1)
-            DataConstruct();
+            sendData(msgBuffer, DeviceAddress);
     }
 
     /***********************************************************************************************
