@@ -541,7 +541,11 @@ public class MainActivity extends AppCompatActivity {
     private void sendData(byte[] message, String address) {
         //byte[] sendBuff = message.getBytes();
         try {
-            outStream.write(message);
+            //outStream.write(message);
+            outStream.write(message[3]);
+            outStream.write(message[4]);
+            outStream.write(message[5]);
+            outStream.write(message[6]);
             //outStream.write(12);
         } catch (IOException e) {
             String msg = "An exception occurred during write: " + e.getMessage();
