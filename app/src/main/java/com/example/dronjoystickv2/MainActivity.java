@@ -133,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
         js2.setLayoutAlpha(250);
         js2.setStickAlpha(250);
         js2.setOffset(120);
-        js2.setMinimumDistance(20);
+        js2.setMinimumDistance(80);
         jder_layout.setOnTouchListener(new View.OnTouchListener() {
             public boolean onTouch(View arg0, MotionEvent arg1) {
                 js2.drawStick(arg1);
@@ -155,6 +155,8 @@ public class MainActivity extends AppCompatActivity {
                     tv_byte2_b7.setText("0");
                     LAST_EVENT_J2 = JoystickClass.STICK_NONE;
                     if (flag_conect == 1) {
+                        sendData(msgBuffer, DeviceAddress);
+                        sendData(msgBuffer, DeviceAddress);
                         sendData(msgBuffer, DeviceAddress);
                         sendData(msgBuffer, DeviceAddress);
                     }
@@ -220,176 +222,176 @@ public class MainActivity extends AppCompatActivity {
      **********************************************************************************************/
     public void joystick_der_functions(int direction){
         if (direction == JoystickClass.STICK_UP) {
-            if (LAST_EVENT_J2 != JoystickClass.STICK_UP) {
-                msgBuffer[6] = 1;
-                msgBuffer[7] = 1;
-                msgBuffer[8] = 1;
-                tv_byte2_b0.setText("1");
-                tv_byte2_b1.setText("0");
-                tv_byte2_b2.setText("0");
-                tv_byte2_b3.setText("0");
-                tv_byte2_b4.setText("0");
-                tv_byte2_b5.setText("0");
-                tv_byte2_b6.setText("0");
-                tv_byte2_b7.setText("0");
-                if (flag_conect == 1) {
-                    sendData(msgBuffer, DeviceAddress);
-                    sendData(msgBuffer, DeviceAddress);
-                }
+            //if (LAST_EVENT_J2 != JoystickClass.STICK_UP) {
+            msgBuffer[6] = 1;
+            msgBuffer[7] = 1;
+            msgBuffer[8] = 1;
+            tv_byte2_b0.setText("1");
+            tv_byte2_b1.setText("0");
+            tv_byte2_b2.setText("0");
+            tv_byte2_b3.setText("0");
+            tv_byte2_b4.setText("0");
+            tv_byte2_b5.setText("0");
+            tv_byte2_b6.setText("0");
+            tv_byte2_b7.setText("0");
+            if (flag_conect == 1) {
+                sendData(msgBuffer, DeviceAddress);
+                sendData(msgBuffer, DeviceAddress);
             }
-            LAST_EVENT_J2 = JoystickClass.STICK_UP;
+            //}
+            //LAST_EVENT_J2 = JoystickClass.STICK_UP;
         } else if (direction == JoystickClass.STICK_UPRIGHT) {
-            if (LAST_EVENT_J2 != JoystickClass.STICK_UPRIGHT) {
-                msgBuffer[6] = 2;
-                msgBuffer[7] = 2;
-                msgBuffer[8] = 2;
-                tv_byte2_b0.setText("0");
-                tv_byte2_b1.setText("1");
-                tv_byte2_b2.setText("0");
-                tv_byte2_b3.setText("0");
-                tv_byte2_b4.setText("0");
-                tv_byte2_b5.setText("0");
-                tv_byte2_b6.setText("0");
-                tv_byte2_b7.setText("0");
-                if (flag_conect == 1) {
-                    sendData(msgBuffer, DeviceAddress);
-                    sendData(msgBuffer, DeviceAddress);
-                }
+            //if (LAST_EVENT_J2 != JoystickClass.STICK_UPRIGHT) {
+            msgBuffer[6] = 2;
+            msgBuffer[7] = 2;
+            msgBuffer[8] = 2;
+            tv_byte2_b0.setText("0");
+            tv_byte2_b1.setText("1");
+            tv_byte2_b2.setText("0");
+            tv_byte2_b3.setText("0");
+            tv_byte2_b4.setText("0");
+            tv_byte2_b5.setText("0");
+            tv_byte2_b6.setText("0");
+            tv_byte2_b7.setText("0");
+            if (flag_conect == 1) {
+                sendData(msgBuffer, DeviceAddress);
+                sendData(msgBuffer, DeviceAddress);
             }
-            LAST_EVENT_J2 = JoystickClass.STICK_UPRIGHT;
+            //}
+           //LAST_EVENT_J2 = JoystickClass.STICK_UPRIGHT;
         } else if (direction == JoystickClass.STICK_RIGHT) {
-            if (LAST_EVENT_J2 != JoystickClass.STICK_RIGHT) {
-                msgBuffer[6] = 4;
-                msgBuffer[7] = 4;
-                msgBuffer[8] = 4;
-                tv_byte2_b0.setText("0");
-                tv_byte2_b1.setText("0");
-                tv_byte2_b2.setText("1");
-                tv_byte2_b3.setText("0");
-                tv_byte2_b4.setText("0");
-                tv_byte2_b5.setText("0");
-                tv_byte2_b6.setText("0");
-                tv_byte2_b7.setText("0");
-                if (flag_conect == 1) {
-                    sendData(msgBuffer, DeviceAddress);
-                    sendData(msgBuffer, DeviceAddress);
-                }
+            //if (LAST_EVENT_J2 != JoystickClass.STICK_RIGHT) {
+            msgBuffer[6] = 4;
+            msgBuffer[7] = 4;
+            msgBuffer[8] = 4;
+            tv_byte2_b0.setText("0");
+            tv_byte2_b1.setText("0");
+            tv_byte2_b2.setText("1");
+            tv_byte2_b3.setText("0");
+            tv_byte2_b4.setText("0");
+            tv_byte2_b5.setText("0");
+            tv_byte2_b6.setText("0");
+            tv_byte2_b7.setText("0");
+            if (flag_conect == 1) {
+                sendData(msgBuffer, DeviceAddress);
+                sendData(msgBuffer, DeviceAddress);
             }
-            LAST_EVENT_J2 = JoystickClass.STICK_RIGHT;
+            //}
+            //LAST_EVENT_J2 = JoystickClass.STICK_RIGHT;
         } else if (direction == JoystickClass.STICK_DOWNRIGHT){
-            if (LAST_EVENT_J2 != JoystickClass.STICK_DOWNRIGHT) {
-                msgBuffer[6] = 8;
-                msgBuffer[7] = 8;
-                msgBuffer[8] = 8;
-                tv_byte2_b0.setText("0");
-                tv_byte2_b1.setText("0");
-                tv_byte2_b2.setText("0");
-                tv_byte2_b3.setText("1");
-                tv_byte2_b4.setText("0");
-                tv_byte2_b5.setText("0");
-                tv_byte2_b6.setText("0");
-                tv_byte2_b7.setText("0");
-                if (flag_conect == 1) {
-                    sendData(msgBuffer, DeviceAddress);
-                    sendData(msgBuffer, DeviceAddress);
-                }
+            //if (LAST_EVENT_J2 != JoystickClass.STICK_DOWNRIGHT) {
+            msgBuffer[6] = 8;
+            msgBuffer[7] = 8;
+            msgBuffer[8] = 8;
+            tv_byte2_b0.setText("0");
+            tv_byte2_b1.setText("0");
+            tv_byte2_b2.setText("0");
+            tv_byte2_b3.setText("1");
+            tv_byte2_b4.setText("0");
+            tv_byte2_b5.setText("0");
+            tv_byte2_b6.setText("0");
+            tv_byte2_b7.setText("0");
+            if (flag_conect == 1) {
+                sendData(msgBuffer, DeviceAddress);
+                sendData(msgBuffer, DeviceAddress);
             }
-            LAST_EVENT_J2 = JoystickClass.STICK_DOWNRIGHT;
+            //}
+            //LAST_EVENT_J2 = JoystickClass.STICK_DOWNRIGHT;
         } else if (direction == JoystickClass.STICK_DOWN){
-            if (LAST_EVENT_J2 != JoystickClass.STICK_DOWN) {
-                msgBuffer[6] = 16;
-                msgBuffer[7] = 16;
-                msgBuffer[8] = 16;
-                tv_byte2_b0.setText("0");
-                tv_byte2_b1.setText("0");
-                tv_byte2_b2.setText("0");
-                tv_byte2_b3.setText("0");
-                tv_byte2_b4.setText("1");
-                tv_byte2_b5.setText("0");
-                tv_byte2_b6.setText("0");
-                tv_byte2_b7.setText("0");
-                if (flag_conect == 1) {
-                    sendData(msgBuffer, DeviceAddress);
-                    sendData(msgBuffer, DeviceAddress);
-                }
+            //if (LAST_EVENT_J2 != JoystickClass.STICK_DOWN) {
+            msgBuffer[6] = 16;
+            msgBuffer[7] = 16;
+            msgBuffer[8] = 16;
+            tv_byte2_b0.setText("0");
+            tv_byte2_b1.setText("0");
+            tv_byte2_b2.setText("0");
+            tv_byte2_b3.setText("0");
+            tv_byte2_b4.setText("1");
+            tv_byte2_b5.setText("0");
+            tv_byte2_b6.setText("0");
+            tv_byte2_b7.setText("0");
+            if (flag_conect == 1) {
+                sendData(msgBuffer, DeviceAddress);
+                sendData(msgBuffer, DeviceAddress);
             }
-            LAST_EVENT_J2 = JoystickClass.STICK_DOWN;
+            //}
+            //LAST_EVENT_J2 = JoystickClass.STICK_DOWN;
         } else if (direction == JoystickClass.STICK_DOWNLEFT){
-            if (LAST_EVENT_J2 != JoystickClass.STICK_DOWNLEFT) {
-                msgBuffer[6] = 32;
-                msgBuffer[7] = 32;
-                msgBuffer[8] = 32;
-                tv_byte2_b0.setText("0");
-                tv_byte2_b1.setText("0");
-                tv_byte2_b2.setText("0");
-                tv_byte2_b3.setText("0");
-                tv_byte2_b4.setText("0");
-                tv_byte2_b5.setText("1");
-                tv_byte2_b6.setText("0");
-                tv_byte2_b7.setText("0");
-                if (flag_conect == 1) {
-                    sendData(msgBuffer, DeviceAddress);
-                    sendData(msgBuffer, DeviceAddress);
-                }
+            //if (LAST_EVENT_J2 != JoystickClass.STICK_DOWNLEFT) {
+            msgBuffer[6] = 32;
+            msgBuffer[7] = 32;
+            msgBuffer[8] = 32;
+            tv_byte2_b0.setText("0");
+            tv_byte2_b1.setText("0");
+            tv_byte2_b2.setText("0");
+            tv_byte2_b3.setText("0");
+            tv_byte2_b4.setText("0");
+            tv_byte2_b5.setText("1");
+            tv_byte2_b6.setText("0");
+            tv_byte2_b7.setText("0");
+            if (flag_conect == 1) {
+                sendData(msgBuffer, DeviceAddress);
+                sendData(msgBuffer, DeviceAddress);
             }
-            LAST_EVENT_J2 = JoystickClass.STICK_DOWNLEFT;
+            //}
+            //LAST_EVENT_J2 = JoystickClass.STICK_DOWNLEFT;
         } else if (direction == JoystickClass.STICK_LEFT){
-            if (LAST_EVENT_J2 != JoystickClass.STICK_LEFT) {
-                msgBuffer[6] = 64;
-                msgBuffer[7] = 64;
-                msgBuffer[8] = 64;
-                tv_byte2_b0.setText("0");
-                tv_byte2_b1.setText("0");
-                tv_byte2_b2.setText("0");
-                tv_byte2_b3.setText("0");
-                tv_byte2_b4.setText("0");
-                tv_byte2_b5.setText("0");
-                tv_byte2_b6.setText("1");
-                tv_byte2_b7.setText("0");
-                if (flag_conect == 1) {
-                    sendData(msgBuffer, DeviceAddress);
-                    sendData(msgBuffer, DeviceAddress);
-                }
+            //if (LAST_EVENT_J2 != JoystickClass.STICK_LEFT) {
+            msgBuffer[6] = 64;
+            msgBuffer[7] = 64;
+            msgBuffer[8] = 64;
+            tv_byte2_b0.setText("0");
+            tv_byte2_b1.setText("0");
+            tv_byte2_b2.setText("0");
+            tv_byte2_b3.setText("0");
+            tv_byte2_b4.setText("0");
+            tv_byte2_b5.setText("0");
+            tv_byte2_b6.setText("1");
+            tv_byte2_b7.setText("0");
+            if (flag_conect == 1) {
+                sendData(msgBuffer, DeviceAddress);
+                sendData(msgBuffer, DeviceAddress);
             }
-            LAST_EVENT_J2 = JoystickClass.STICK_LEFT;
+            //}
+            //LAST_EVENT_J2 = JoystickClass.STICK_LEFT;
         } else if (direction == JoystickClass.STICK_UPLEFT){
-            if (LAST_EVENT_J2 != JoystickClass.STICK_UPLEFT) {
-                msgBuffer[6] = -128;
-                msgBuffer[7] = -128;
-                msgBuffer[8] = -128;
-                tv_byte2_b0.setText("0");
-                tv_byte2_b1.setText("0");
-                tv_byte2_b2.setText("0");
-                tv_byte2_b3.setText("0");
-                tv_byte2_b4.setText("0");
-                tv_byte2_b5.setText("0");
-                tv_byte2_b6.setText("0");
-                tv_byte2_b7.setText("1");
-                if (flag_conect == 1) {
-                    sendData(msgBuffer, DeviceAddress);
-                    sendData(msgBuffer, DeviceAddress);
-                }
+            //if (LAST_EVENT_J2 != JoystickClass.STICK_UPLEFT) {
+            msgBuffer[6] = -128;
+            msgBuffer[7] = -128;
+            msgBuffer[8] = -128;
+            tv_byte2_b0.setText("0");
+            tv_byte2_b1.setText("0");
+            tv_byte2_b2.setText("0");
+            tv_byte2_b3.setText("0");
+            tv_byte2_b4.setText("0");
+            tv_byte2_b5.setText("0");
+            tv_byte2_b6.setText("0");
+            tv_byte2_b7.setText("1");
+            if (flag_conect == 1) {
+                sendData(msgBuffer, DeviceAddress);
+                sendData(msgBuffer, DeviceAddress);
             }
-            LAST_EVENT_J2 = JoystickClass.STICK_UPLEFT;
+            //}
+            //LAST_EVENT_J2 = JoystickClass.STICK_UPLEFT;
         } else if (direction == JoystickClass.STICK_NONE){
-            if (LAST_EVENT_J2 != JoystickClass.STICK_NONE) {
-                msgBuffer[6] = 0;
-                msgBuffer[7] = 0;
-                msgBuffer[8] = 0;
-                tv_byte2_b0.setText("0");
-                tv_byte2_b1.setText("0");
-                tv_byte2_b2.setText("0");
-                tv_byte2_b3.setText("0");
-                tv_byte2_b4.setText("0");
-                tv_byte2_b5.setText("0");
-                tv_byte2_b6.setText("0");
-                tv_byte2_b7.setText("0");
-                if (flag_conect == 1) {
-                    sendData(msgBuffer, DeviceAddress);
-                    sendData(msgBuffer, DeviceAddress);
-                }
+            //if (LAST_EVENT_J2 != JoystickClass.STICK_NONE) {
+            msgBuffer[6] = 0;
+            msgBuffer[7] = 0;
+            msgBuffer[8] = 0;
+            tv_byte2_b0.setText("0");
+            tv_byte2_b1.setText("0");
+            tv_byte2_b2.setText("0");
+            tv_byte2_b3.setText("0");
+            tv_byte2_b4.setText("0");
+            tv_byte2_b5.setText("0");
+            tv_byte2_b6.setText("0");
+            tv_byte2_b7.setText("0");
+            if (flag_conect == 1) {
+                sendData(msgBuffer, DeviceAddress);
+                sendData(msgBuffer, DeviceAddress);
             }
-            LAST_EVENT_J2 = JoystickClass.STICK_NONE;
+            //}
+            //LAST_EVENT_J2 = JoystickClass.STICK_NONE;
         }
     } // Fin de función joystick_der_functions
 
