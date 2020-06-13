@@ -156,9 +156,9 @@ public class MainActivity extends AppCompatActivity {
                     LAST_EVENT_J2 = JoystickClass.STICK_NONE;
                     if (flag_conect == 1) {
                         sendData(msgBuffer, DeviceAddress);
-                        sendData(msgBuffer, DeviceAddress);
-                        sendData(msgBuffer, DeviceAddress);
-                        sendData(msgBuffer, DeviceAddress);
+                        //sendData(msgBuffer, DeviceAddress);
+                        //sendData(msgBuffer, DeviceAddress);
+                        //sendData(msgBuffer, DeviceAddress);
                     }
 
                 }
@@ -236,7 +236,7 @@ public class MainActivity extends AppCompatActivity {
             tv_byte2_b7.setText("0");
             if (flag_conect == 1) {
                 sendData(msgBuffer, DeviceAddress);
-                sendData(msgBuffer, DeviceAddress);
+                //sendData(msgBuffer, DeviceAddress);
             }
             //}
             //LAST_EVENT_J2 = JoystickClass.STICK_UP;
@@ -255,7 +255,7 @@ public class MainActivity extends AppCompatActivity {
             tv_byte2_b7.setText("0");
             if (flag_conect == 1) {
                 sendData(msgBuffer, DeviceAddress);
-                sendData(msgBuffer, DeviceAddress);
+                //sendData(msgBuffer, DeviceAddress);
             }
             //}
            //LAST_EVENT_J2 = JoystickClass.STICK_UPRIGHT;
@@ -274,7 +274,7 @@ public class MainActivity extends AppCompatActivity {
             tv_byte2_b7.setText("0");
             if (flag_conect == 1) {
                 sendData(msgBuffer, DeviceAddress);
-                sendData(msgBuffer, DeviceAddress);
+                //sendData(msgBuffer, DeviceAddress);
             }
             //}
             //LAST_EVENT_J2 = JoystickClass.STICK_RIGHT;
@@ -293,7 +293,7 @@ public class MainActivity extends AppCompatActivity {
             tv_byte2_b7.setText("0");
             if (flag_conect == 1) {
                 sendData(msgBuffer, DeviceAddress);
-                sendData(msgBuffer, DeviceAddress);
+                //sendData(msgBuffer, DeviceAddress);
             }
             //}
             //LAST_EVENT_J2 = JoystickClass.STICK_DOWNRIGHT;
@@ -312,7 +312,7 @@ public class MainActivity extends AppCompatActivity {
             tv_byte2_b7.setText("0");
             if (flag_conect == 1) {
                 sendData(msgBuffer, DeviceAddress);
-                sendData(msgBuffer, DeviceAddress);
+                //sendData(msgBuffer, DeviceAddress);
             }
             //}
             //LAST_EVENT_J2 = JoystickClass.STICK_DOWN;
@@ -331,7 +331,7 @@ public class MainActivity extends AppCompatActivity {
             tv_byte2_b7.setText("0");
             if (flag_conect == 1) {
                 sendData(msgBuffer, DeviceAddress);
-                sendData(msgBuffer, DeviceAddress);
+                //sendData(msgBuffer, DeviceAddress);
             }
             //}
             //LAST_EVENT_J2 = JoystickClass.STICK_DOWNLEFT;
@@ -350,7 +350,7 @@ public class MainActivity extends AppCompatActivity {
             tv_byte2_b7.setText("0");
             if (flag_conect == 1) {
                 sendData(msgBuffer, DeviceAddress);
-                sendData(msgBuffer, DeviceAddress);
+                //sendData(msgBuffer, DeviceAddress);
             }
             //}
             //LAST_EVENT_J2 = JoystickClass.STICK_LEFT;
@@ -369,7 +369,7 @@ public class MainActivity extends AppCompatActivity {
             tv_byte2_b7.setText("1");
             if (flag_conect == 1) {
                 sendData(msgBuffer, DeviceAddress);
-                sendData(msgBuffer, DeviceAddress);
+                //sendData(msgBuffer, DeviceAddress);
             }
             //}
             //LAST_EVENT_J2 = JoystickClass.STICK_UPLEFT;
@@ -388,7 +388,7 @@ public class MainActivity extends AppCompatActivity {
             tv_byte2_b7.setText("0");
             if (flag_conect == 1) {
                 sendData(msgBuffer, DeviceAddress);
-                sendData(msgBuffer, DeviceAddress);
+                //sendData(msgBuffer, DeviceAddress);
             }
             //}
             //LAST_EVENT_J2 = JoystickClass.STICK_NONE;
@@ -406,7 +406,7 @@ public class MainActivity extends AppCompatActivity {
         msgBuffer[4] = throttle;
         if (flag_conect == 1) {
             sendData(msgBuffer, DeviceAddress);
-            sendData(msgBuffer, DeviceAddress);
+            //sendData(msgBuffer, DeviceAddress);
         }
     }
 
