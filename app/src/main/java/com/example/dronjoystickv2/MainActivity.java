@@ -95,8 +95,8 @@ public class MainActivity extends AppCompatActivity {
     // Tabla de CRC8
     private static int[] crc8Table = new int[256];
     private static byte crc_poly = 29;
-    private static byte[] last_data_j = {0, 0, 0};
-    private static byte[] last_data_t = {0, 0, 0};
+    private static int[] last_data_j = {0, 0};
+    private static int[] last_data_t = {0, 0};
     /**********************************************************************************************/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -620,12 +620,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private int get_CRC8(byte[] data, int size) {
+    private int get_CRC8(int[] data, int size) {
         int crc = 0;
         int i;
         int aux;
         for (i = 0; i < size; i++) {
-            aux = data[i] ^ crc;
+            aux = (data[i] & 0xFF) ^ crc;
             crc = crc8Table[aux];
         }
 
@@ -636,23 +636,25 @@ public class MainActivity extends AppCompatActivity {
         try {
             if (J_or_T == "joystick")
             {
-                byte[] data = {35, message};
-                int crc = get_CRC8(data, 2);
-                byte[] data2 = {35, message, (byte)(crc & 0xFF)};
-                boolean isequal = isEqual(data2, last_data_j, 3);
-                if (!isequal)
+                int[] data = {35, (int)message};
+                boolean isequal = isEqual(data, last_data_j, 2);
+                if (!isequal){
+                    int crc = get_CRC8(data, 2);
+                    byte[] data2 = {35, message, (byte)(crc & 0xFF)};
                     outStream.write(data2);
-                last_data_j = data2;
+                    last_data_j = data;
+                }
             }
             else if (J_or_T == "throttle")
             {
-                byte[] data = {42, message};
-                int crc = get_CRC8(data, 2);
-                byte[] data2 = {42, message, (byte)(crc & 0xFF)};
-                boolean isequal = isEqual(data2, last_data_t, 3);
-                if (!isequal)
+                int[] data = {42, (int)message};
+                boolean isequal = isEqual(data, last_data_t, 2);
+                if (!isequal){
+                    int crc = get_CRC8(data, 2);
+                    byte[] data2 = {42, message, (byte)(crc & 0xFF)};
                     outStream.write(data2);
-                last_data_t = data2;
+                    last_data_t = data;
+                }
             }
         } catch (IOException e) {
             String msg = "An exception occurred during write: " + e.getMessage();
@@ -664,7 +666,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private boolean isEqual(byte[] data1, byte[] data2, int size) {
+    private boolean isEqual(int[] data1, int[] data2, int size) {
         int i;
         boolean diff = false;
         for (i = 0; i < size; i++) {
