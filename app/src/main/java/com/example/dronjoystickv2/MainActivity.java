@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
     //public static byte Byte3 = 0, Byte2 = 0, Byte1 = 0, Byte0 = 0;
     // Stream de datos enviados
     public static byte[] msgBuffer = {-86, -88, 0, 0, 0, 64, 0, 0, 0, -72, -87};
-    public static int throttle = 0, joystick = 0;
+    public static byte throttle = 0, joystick = 0;
     // UUID para el bluetooth
     private static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
     // Socket para el bluetooth
@@ -92,6 +92,11 @@ public class MainActivity extends AppCompatActivity {
     private int flag_conect = 0;
     // Dirección del sispositivo bluetooth conectado
     private String DeviceAddress;
+    // Tabla de CRC8
+    private static int[] crc8Table = new int[256];
+    private static byte crc_poly = 29;
+    private static byte[] last_data_j = {0, 0, 0};
+    private static byte[] last_data_t = {0, 0, 0};
     /**********************************************************************************************/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,6 +105,11 @@ public class MainActivity extends AppCompatActivity {
         // Orientación de pantalla landscape
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+
+        /******************************************************************************************/
+        // Inicializo la tabla de lookup para el CRC8
+        init_crc8_table();
 
         /*******************************************************************************************
          * Registro de los objetos
@@ -142,9 +152,10 @@ public class MainActivity extends AppCompatActivity {
                     int direction = js2.get8Direction();
                     joystick_der_functions(direction);
                 } else if (arg1.getAction() == MotionEvent.ACTION_UP) {
-                    msgBuffer[6] = 0;
+                    /*msgBuffer[6] = 0;
                     msgBuffer[7] = 0;
-                    msgBuffer[8] = 0;
+                    msgBuffer[8] = 0;*/
+                    joystick = 0;
                     tv_byte2_b0.setText("0");
                     tv_byte2_b1.setText("0");
                     tv_byte2_b2.setText("0");
@@ -155,10 +166,8 @@ public class MainActivity extends AppCompatActivity {
                     tv_byte2_b7.setText("0");
                     LAST_EVENT_J2 = JoystickClass.STICK_NONE;
                     if (flag_conect == 1) {
-                        sendData(msgBuffer, DeviceAddress);
                         //sendData(msgBuffer, DeviceAddress);
-                        //sendData(msgBuffer, DeviceAddress);
-                        //sendData(msgBuffer, DeviceAddress);
+                        sendDataWithCRC(joystick, DeviceAddress, "joystick");
                     }
 
                 }
@@ -223,9 +232,10 @@ public class MainActivity extends AppCompatActivity {
     public void joystick_der_functions(int direction){
         if (direction == JoystickClass.STICK_UP) {
             //if (LAST_EVENT_J2 != JoystickClass.STICK_UP) {
-            msgBuffer[6] = 1;
+            /*msgBuffer[6] = 1;
             msgBuffer[7] = 1;
-            msgBuffer[8] = 1;
+            msgBuffer[8] = 1;*/
+            joystick = 1;
             tv_byte2_b0.setText("1");
             tv_byte2_b1.setText("0");
             tv_byte2_b2.setText("0");
@@ -235,16 +245,17 @@ public class MainActivity extends AppCompatActivity {
             tv_byte2_b6.setText("0");
             tv_byte2_b7.setText("0");
             if (flag_conect == 1) {
-                sendData(msgBuffer, DeviceAddress);
                 //sendData(msgBuffer, DeviceAddress);
+                sendDataWithCRC(joystick, DeviceAddress, "joystick");
             }
             //}
             //LAST_EVENT_J2 = JoystickClass.STICK_UP;
         } else if (direction == JoystickClass.STICK_UPRIGHT) {
             //if (LAST_EVENT_J2 != JoystickClass.STICK_UPRIGHT) {
-            msgBuffer[6] = 2;
+            /*msgBuffer[6] = 2;
             msgBuffer[7] = 2;
-            msgBuffer[8] = 2;
+            msgBuffer[8] = 2;*/
+            joystick = 2;
             tv_byte2_b0.setText("0");
             tv_byte2_b1.setText("1");
             tv_byte2_b2.setText("0");
@@ -254,16 +265,17 @@ public class MainActivity extends AppCompatActivity {
             tv_byte2_b6.setText("0");
             tv_byte2_b7.setText("0");
             if (flag_conect == 1) {
-                sendData(msgBuffer, DeviceAddress);
                 //sendData(msgBuffer, DeviceAddress);
+                sendDataWithCRC(joystick, DeviceAddress, "joystick");
             }
             //}
            //LAST_EVENT_J2 = JoystickClass.STICK_UPRIGHT;
         } else if (direction == JoystickClass.STICK_RIGHT) {
             //if (LAST_EVENT_J2 != JoystickClass.STICK_RIGHT) {
-            msgBuffer[6] = 4;
+            /*msgBuffer[6] = 4;
             msgBuffer[7] = 4;
-            msgBuffer[8] = 4;
+            msgBuffer[8] = 4;*/
+            joystick = 4;
             tv_byte2_b0.setText("0");
             tv_byte2_b1.setText("0");
             tv_byte2_b2.setText("1");
@@ -273,16 +285,17 @@ public class MainActivity extends AppCompatActivity {
             tv_byte2_b6.setText("0");
             tv_byte2_b7.setText("0");
             if (flag_conect == 1) {
-                sendData(msgBuffer, DeviceAddress);
                 //sendData(msgBuffer, DeviceAddress);
+                sendDataWithCRC(joystick, DeviceAddress, "joystick");
             }
             //}
             //LAST_EVENT_J2 = JoystickClass.STICK_RIGHT;
         } else if (direction == JoystickClass.STICK_DOWNRIGHT){
             //if (LAST_EVENT_J2 != JoystickClass.STICK_DOWNRIGHT) {
-            msgBuffer[6] = 8;
+            /*msgBuffer[6] = 8;
             msgBuffer[7] = 8;
-            msgBuffer[8] = 8;
+            msgBuffer[8] = 8;*/
+            joystick = 8;
             tv_byte2_b0.setText("0");
             tv_byte2_b1.setText("0");
             tv_byte2_b2.setText("0");
@@ -292,16 +305,17 @@ public class MainActivity extends AppCompatActivity {
             tv_byte2_b6.setText("0");
             tv_byte2_b7.setText("0");
             if (flag_conect == 1) {
-                sendData(msgBuffer, DeviceAddress);
                 //sendData(msgBuffer, DeviceAddress);
+                sendDataWithCRC(joystick, DeviceAddress, "joystick");
             }
             //}
             //LAST_EVENT_J2 = JoystickClass.STICK_DOWNRIGHT;
         } else if (direction == JoystickClass.STICK_DOWN){
             //if (LAST_EVENT_J2 != JoystickClass.STICK_DOWN) {
-            msgBuffer[6] = 16;
+            /*msgBuffer[6] = 16;
             msgBuffer[7] = 16;
-            msgBuffer[8] = 16;
+            msgBuffer[8] = 16;*/
+            joystick = 16;
             tv_byte2_b0.setText("0");
             tv_byte2_b1.setText("0");
             tv_byte2_b2.setText("0");
@@ -311,16 +325,17 @@ public class MainActivity extends AppCompatActivity {
             tv_byte2_b6.setText("0");
             tv_byte2_b7.setText("0");
             if (flag_conect == 1) {
-                sendData(msgBuffer, DeviceAddress);
                 //sendData(msgBuffer, DeviceAddress);
+                sendDataWithCRC(joystick, DeviceAddress, "joystick");
             }
             //}
             //LAST_EVENT_J2 = JoystickClass.STICK_DOWN;
         } else if (direction == JoystickClass.STICK_DOWNLEFT){
             //if (LAST_EVENT_J2 != JoystickClass.STICK_DOWNLEFT) {
-            msgBuffer[6] = 32;
+            /*msgBuffer[6] = 32;
             msgBuffer[7] = 32;
-            msgBuffer[8] = 32;
+            msgBuffer[8] = 32;*/
+            joystick = 32;
             tv_byte2_b0.setText("0");
             tv_byte2_b1.setText("0");
             tv_byte2_b2.setText("0");
@@ -330,16 +345,17 @@ public class MainActivity extends AppCompatActivity {
             tv_byte2_b6.setText("0");
             tv_byte2_b7.setText("0");
             if (flag_conect == 1) {
-                sendData(msgBuffer, DeviceAddress);
                 //sendData(msgBuffer, DeviceAddress);
+                sendDataWithCRC(joystick, DeviceAddress, "joystick");
             }
             //}
             //LAST_EVENT_J2 = JoystickClass.STICK_DOWNLEFT;
         } else if (direction == JoystickClass.STICK_LEFT){
             //if (LAST_EVENT_J2 != JoystickClass.STICK_LEFT) {
-            msgBuffer[6] = 64;
+            /*msgBuffer[6] = 64;
             msgBuffer[7] = 64;
-            msgBuffer[8] = 64;
+            msgBuffer[8] = 64;*/
+            joystick = 64;
             tv_byte2_b0.setText("0");
             tv_byte2_b1.setText("0");
             tv_byte2_b2.setText("0");
@@ -349,16 +365,17 @@ public class MainActivity extends AppCompatActivity {
             tv_byte2_b6.setText("1");
             tv_byte2_b7.setText("0");
             if (flag_conect == 1) {
-                sendData(msgBuffer, DeviceAddress);
                 //sendData(msgBuffer, DeviceAddress);
+                sendDataWithCRC(joystick, DeviceAddress, "joystick");
             }
             //}
             //LAST_EVENT_J2 = JoystickClass.STICK_LEFT;
         } else if (direction == JoystickClass.STICK_UPLEFT){
             //if (LAST_EVENT_J2 != JoystickClass.STICK_UPLEFT) {
-            msgBuffer[6] = -128;
+            /*msgBuffer[6] = -128;
             msgBuffer[7] = -128;
-            msgBuffer[8] = -128;
+            msgBuffer[8] = -128;*/
+            joystick = -128;
             tv_byte2_b0.setText("0");
             tv_byte2_b1.setText("0");
             tv_byte2_b2.setText("0");
@@ -368,16 +385,17 @@ public class MainActivity extends AppCompatActivity {
             tv_byte2_b6.setText("0");
             tv_byte2_b7.setText("1");
             if (flag_conect == 1) {
-                sendData(msgBuffer, DeviceAddress);
                 //sendData(msgBuffer, DeviceAddress);
+                sendDataWithCRC(joystick, DeviceAddress, "joystick");
             }
             //}
             //LAST_EVENT_J2 = JoystickClass.STICK_UPLEFT;
         } else if (direction == JoystickClass.STICK_NONE){
             //if (LAST_EVENT_J2 != JoystickClass.STICK_NONE) {
-            msgBuffer[6] = 0;
+            /*msgBuffer[6] = 0;
             msgBuffer[7] = 0;
-            msgBuffer[8] = 0;
+            msgBuffer[8] = 0;*/
+            joystick = 0;
             tv_byte2_b0.setText("0");
             tv_byte2_b1.setText("0");
             tv_byte2_b2.setText("0");
@@ -387,8 +405,8 @@ public class MainActivity extends AppCompatActivity {
             tv_byte2_b6.setText("0");
             tv_byte2_b7.setText("0");
             if (flag_conect == 1) {
-                sendData(msgBuffer, DeviceAddress);
                 //sendData(msgBuffer, DeviceAddress);
+                sendDataWithCRC(joystick, DeviceAddress, "joystick");
             }
             //}
             //LAST_EVENT_J2 = JoystickClass.STICK_NONE;
@@ -399,14 +417,14 @@ public class MainActivity extends AppCompatActivity {
      * Función para el throttle
      **********************************************************************************************/
     public void SetThrottle(float progress){
-        byte throttle = (byte)Math.round(progress);
-        throttle_value.setText(Integer.toString(throttle));
-        msgBuffer[2] = throttle;
-        msgBuffer[3] = throttle;
-        msgBuffer[4] = throttle;
+        byte throttleData = (byte)Math.round(progress);
+        throttle_value.setText(Integer.toString(throttleData));
+        /*msgBuffer[2] = throttleData;
+        msgBuffer[3] = throttleData;
+        msgBuffer[4] = throttleData;*/
         if (flag_conect == 1) {
-            sendData(msgBuffer, DeviceAddress);
             //sendData(msgBuffer, DeviceAddress);
+            sendDataWithCRC(throttleData, DeviceAddress, "throttle");
         }
     }
 
@@ -584,15 +602,82 @@ public class MainActivity extends AppCompatActivity {
         return device.createRfcommSocketToServiceRecord(MY_UUID);
     }
 
+    private void init_crc8_table(){
+        int divident, bit;
+
+        for (divident=0; divident < 256; divident++) {
+            int currByte = divident;
+            for (bit = 0; bit < 8; bit++) {
+                if ((currByte & 0x80) != 0) {
+                    currByte <<= 1;
+                    currByte ^= crc_poly;
+                } else {
+                    currByte <<= 1;
+                }
+            }
+            crc8Table[divident] = currByte & 0xFF;
+        }
+    }
+
+
+    private int get_CRC8(byte[] data, int size) {
+        int crc = 0;
+        int i;
+        int aux;
+        for (i = 0; i < size; i++) {
+            aux = data[i] ^ crc;
+            crc = crc8Table[aux];
+        }
+
+        return crc;
+    }
+
+    private void sendDataWithCRC(byte message, String address, String J_or_T){
+        try {
+            if (J_or_T == "joystick")
+            {
+                byte[] data = {35, message};
+                int crc = get_CRC8(data, 2);
+                byte[] data2 = {35, message, (byte)(crc & 0xFF)};
+                boolean isequal = isEqual(data2, last_data_j, 3);
+                if (!isequal)
+                    outStream.write(data2);
+                last_data_j = data2;
+            }
+            else if (J_or_T == "throttle")
+            {
+                byte[] data = {42, message};
+                int crc = get_CRC8(data, 2);
+                byte[] data2 = {42, message, (byte)(crc & 0xFF)};
+                boolean isequal = isEqual(data2, last_data_t, 3);
+                if (!isequal)
+                    outStream.write(data2);
+                last_data_t = data2;
+            }
+        } catch (IOException e) {
+            String msg = "An exception occurred during write: " + e.getMessage();
+            if (address.equals("00:00:00:00:00:00"))
+                msg = msg + ".\n\nUpdate your server address from 00:00:00:00:00:00 to the correct address on line 35 in the java code";
+            msg = msg + ".\n\nCheck that the SPP UUID: " + MY_UUID.toString() + " exists on server.\n\n";
+
+            errorExit("Fatal Error", msg);
+        }
+    }
+
+    private boolean isEqual(byte[] data1, byte[] data2, int size) {
+        int i;
+        boolean diff = false;
+        for (i = 0; i < size; i++) {
+            if (data1[i] != data2[i])
+                diff = true;
+        }
+        return !diff;
+    }
+
     private void sendData(byte[] message, String address) {
         //byte[] sendBuff = message.getBytes();
         try {
             outStream.write(message);
-            /*outStream.write(message[3]);
-            outStream.write(message[4]);
-            outStream.write(message[5]);
-            outStream.write(message[6]);*/
-            //outStream.write(12);
         } catch (IOException e) {
             String msg = "An exception occurred during write: " + e.getMessage();
             if (address.equals("00:00:00:00:00:00"))
